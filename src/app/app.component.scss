@@ -1,7 +1,13 @@
-main{
-  font-family: Arial, sans-serif;
-  font-size: 15px;
+.instructions-ram {
   display: flex;
+  position: absolute;
+  flex-direction: row;
   justify-content: space-between;
-  margin: 10px 50px;
+  width: min(100%, 600px);
+  right: 2%;
+  top: 10%;
+}
+
+.ram-component {
+  margin-left: 50px;
 }

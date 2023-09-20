@@ -1,0 +1,25 @@
+<div>
+  <table>
+    <thead>
+    <tr>
+      <td>
+        <strong>Instructions</strong>
+      </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let instruction of instructions | keyvalue; trackBy: trackByFn">
+      <td>
+        <span>
+        {{ instruction.key }}
+        </span>
+        <input
+          type="text"
+          [(ngModel)]="instruction.value"
+          (ngModelChange)="updateInstructionValue(instruction.key, $event)"
+        />
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

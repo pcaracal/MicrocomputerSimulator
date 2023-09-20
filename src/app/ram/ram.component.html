@@ -1,1 +1,25 @@
-<p>ram works!</p>
+<div>
+  <table>
+    <thead>
+    <tr>
+      <td>
+        <strong>RAM</strong>
+      </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let _ram of ram | keyvalue; trackBy: trackByFn">
+      <td>
+      <span>
+        {{ _ram.key }}
+      </span>
+        <input
+          type="text"
+          [(ngModel)]="_ram.value"
+          (ngModelChange)="updateRamValue(_ram.key, $event)"
+        />
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
