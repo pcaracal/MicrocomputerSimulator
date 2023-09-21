@@ -16,8 +16,6 @@ export class RamComponent {
 
   updateRamValue(key: string, newValue: string) {
     this.storageService.ram.set(key, newValue);
-    console.log(this.storageService.instructions);
-    console.log(this.storageService.ram);
   }
 
   trackByFn(index: number, item: any) {

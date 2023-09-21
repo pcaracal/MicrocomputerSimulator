@@ -15,14 +15,14 @@ export class CpuService {
   }
 
   createRegisterMap(): void {
-    this.registers.set("eax", "0x0");
-    this.registers.set("ebx", "0x1");
-    this.registers.set("ecx", "0x2");
-    this.registers.set("edx", "0x3");
-    this.registers.set("esp", "0x4");
-    this.registers.set("ebp", "0x5");
-    this.registers.set("esi", "0x6");
-    this.registers.set("edi", "0x7");
+    this.registers.set("EAX", "0");
+    this.registers.set("EBX", "1");
+    this.registers.set("ECX", "2");
+    this.registers.set("EDX", "3");
+    this.registers.set("ESP", "4");
+    this.registers.set("EBP", "5");
+    this.registers.set("ESI", "6");
+    this.registers.set("EDI", "7");
   }
 
   createInstructionMap(): void {
@@ -91,19 +91,5 @@ export class CpuService {
     this.instructionsReg.set("MOV", "0xF0");   // MOV <dst>, <src>
   }
 
-  getMachineCodeFromMnemonic(mnemonic: string): any {
-    mnemonic = mnemonic.toUpperCase().trim().replace(",", " ").replace("  ", " ");
-    let mnemonicArr = mnemonic.split(" ");
-    let instruction = mnemonicArr[0];
-    let operand = mnemonicArr[1];
-    let operand2 = mnemonicArr[2];
 
-    if (operand && operand2) { // MOV <dst>, <src>
-      if (this.registers.has(operand) && this.registers.has(operand2)) {
-        // @ts-ignore
-        return this.instructionsReg.get("MOV") + this.registers.get(operand) + this.registers.get(operand2);
-      }
-    }
-
-  }
 }
