@@ -29,3 +29,17 @@ td {
   justify-content: space-between;
   align-items: center;
 }
+
+button {
+  width: 100%;
+  background-color: #bbbbff;
+  border-color: #bbbbff;
+  padding: 0.375rem 0.75rem;
+  margin-top: 10px;
+  font-size: 1rem;
+  // Round le edges
+  border-radius: 0.25rem;
+  // Remove le outline
+  outline: none;
+
+}

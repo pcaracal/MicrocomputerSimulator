@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {StorageService} from "../storage.service";
+import {BaseConverter} from "../baseconverter";
 
 @Component({
   selector: 'app-ram',
@@ -22,4 +23,6 @@ export class RamComponent {
   trackByFn(index: number, item: any) {
     return item.key;
   }
+
+  protected readonly BaseConverter = BaseConverter;
 }
