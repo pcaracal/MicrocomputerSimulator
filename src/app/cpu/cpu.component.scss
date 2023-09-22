@@ -1,0 +1,30 @@
+.cpu-container {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  border-radius: 5px;
+  border: 1px solid #43454A;
+}
+
+.status-bar {
+  background-color: #43454A;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-flag-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  table {
+    width: 100%;
+  }
+
+  input[type="text"] {
+    width: max-content;
+  }
+}

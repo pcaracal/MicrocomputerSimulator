@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {StorageService} from "./storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,11 @@ export class CpuService {
   instructionsMem: Map<string, string> = new Map<string, string>(); // Instruction set (Mnemonic -> Machine Code (HEX 16-bit). Rightmost 4 bits is for the register, and the rest is for the opcode.)
   registers: Map<string, string> = new Map<string, string>(); // Registers (HEX 4-bit)
 
-  constructor() {
+  constructor(private _storageService: StorageService) {
     this.createRegisterMap();
     this.createInstructionMap();
   }
+
 
   createRegisterMap(): void {
     this.registers.set("EAX", "0");
@@ -90,6 +92,4 @@ export class CpuService {
     // MOV gets special treatment because it has two registers
     this.instructionsReg.set("MOV", "0xF0");   // MOV <dst>, <src>
   }
-
-
 }

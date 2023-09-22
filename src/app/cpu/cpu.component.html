@@ -1,1 +1,25 @@
-<p>cpu works!</p>
+<div class="cpu-container">
+  <div class="status-bar">
+    {{currentState}}
+  </div>
+  <div class="register-flag-container">
+    <table>
+      <thead>
+      <tr>
+        <th>Register</th>
+        <th>Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let _register of registers | keyvalue">
+        <th>
+          {{_register.key}}
+        </th>
+        <th>
+          <input type="text" [(ngModel)]="_register.value"/>
+        </th>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
