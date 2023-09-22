@@ -42,4 +42,47 @@ export class BaseConverter {
     }
     return "0x" + hex.toUpperCase();
   }
+
+  public static anyToDec(any: string): string {
+    any = any.toLowerCase();
+    if (any.substring(0, 2) === "0x") {
+      return this.hexToDec(any);
+    } else if (any.substring(0, 2) === "0b") {
+      return this.binToDec(any);
+    } else {
+      return any;
+    }
+  }
+
+  public static anyToHex(any: string): string {
+    any = any.toLowerCase();
+    if (any.substring(0, 2) === "0x") {
+      const prefix = "0x";
+      let hex = any.substring(2);
+      while (hex.length < 4) {
+        hex = "0" + hex;
+      }
+      return prefix + hex.toUpperCase();
+    } else if (any.substring(0, 2) === "0b") {
+      return this.binToHex(any);
+    } else {
+      return this.decToHex(any);
+    }
+  }
+
+  public static anyToBin(any: string): string {
+    any = any.toLowerCase();
+    if (any.substring(0, 2) === "0x") {
+      return this.hexToBin(any);
+    } else if (any.substring(0, 2) === "0b") {
+      const prefix = "0b";
+      let bin = any.substring(2);
+      while (bin.length < 16) {
+        bin = "0" + bin;
+      }
+      return prefix + bin;
+    } else {
+      return this.decToBin(any);
+    }
+  }
 }

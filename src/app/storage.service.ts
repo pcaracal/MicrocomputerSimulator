@@ -6,7 +6,7 @@ import {BaseConverter} from "./baseconverter";
 })
 export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
   // Memory
-  instructions: Map<string, string> = new Map<string, string>(); // Instructions. User writes assembly code here, which is then converted to machine code and stored in the RAM. (Mnemonic -> Machine Code)
+  instructions: Map<number, string> = new Map<number, string>(); // Instructions. User writes assembly code here, which is then converted to machine code and stored in the RAM. (Mnemonic -> Machine Code)
   ram: Map<string, string> = new Map<string, string>(); // Main storage of the computer (all in hex). The user can manually edit this.
 
   // Registers
@@ -27,10 +27,9 @@ export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
   PF: boolean = false; // Parity flag
 
 
-
   constructor() {
     for (let i = 0; i < 16; i++) {
-      this.instructions.set(BaseConverter.decToHex(i.toString()), "NOP");
+      this.instructions.set(i, "NOP");
     }
 
     this.clearRam();
@@ -38,7 +37,7 @@ export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
 
   clearRam(): void {
     for (let i = 0; i < 32; i++) {
-      this.ram.set(BaseConverter.decToHex(i.toString()), BaseConverter.decToHex("0"));
+      this.ram.set(BaseConverter.decToHex(i.toString()), BaseConverter.anyToHex("0"));
     }
   }
 }

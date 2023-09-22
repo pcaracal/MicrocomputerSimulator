@@ -74,7 +74,7 @@ export class CompilerService {
         // Machine code goes into ramIndex, address goes into ramIndex + 1
         this._storageService.ram.set(BaseConverter.decToHex(this._ramIndex.toString()), machineCode);
         this._ramIndex++;
-        this._storageService.ram.set(BaseConverter.decToHex(this._ramIndex.toString()), address);
+        this._storageService.ram.set(BaseConverter.decToHex(this._ramIndex.toString()), BaseConverter.anyToHex(address));
         this._ramIndex++;
         return;
       }
@@ -89,7 +89,7 @@ export class CompilerService {
         // Machine code goes into ramIndex, imm16 goes into ramIndex + 1
         this._storageService.ram.set(BaseConverter.decToHex(this._ramIndex.toString()), machineCode);
         this._ramIndex++;
-        this._storageService.ram.set(BaseConverter.decToHex(this._ramIndex.toString()), imm16);
+        this._storageService.ram.set(BaseConverter.decToHex(this._ramIndex.toString()), BaseConverter.anyToHex(imm16));
         this._ramIndex++;
         return;
       }

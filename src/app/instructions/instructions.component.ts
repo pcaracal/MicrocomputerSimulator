@@ -8,13 +8,13 @@ import {CompilerService} from "../compiler.service";
   styleUrls: ['./instructions.component.scss']
 })
 export class InstructionsComponent {
-  instructions: Map<string, string>;
+  instructions: Map<number, string>;
 
   constructor(private _storageService: StorageService, private _compilerService: CompilerService) {
     this.instructions = this._storageService.instructions;
   }
 
-  updateInstructionValue(key: string, newValue: string) {
+  updateInstructionValue(key: number, newValue: string) {
     this._storageService.instructions.set(key, newValue);
   }
 
