@@ -22,33 +22,26 @@ export class CpuService {
 
   // These get called by the CPU component
   step(): void {
-    if(this._storageService.cpuState === "Halted") { // TODO: Duplicate code fix later re-arrange if statements or something like that
+    if (this._storageService.cpuState === "Halted") { // TODO: Duplicate code fix later re-arrange if statements or something like that
       return;
     }
 
     if (this._loadInstruction) {
+      if (!this._storageService.ram.get(this._storageService.PC)) {
+        this._storageService.updateCpuState("Halted");
+        return; // TODO: Redo this entire part some time later because it's a mess but it works for now so don't touch it
+      }
       this._storageService.updateCpuState("Instruction loaded into IR");
       this._storageService.updateIR(this._storageService.ram.get(this._storageService.PC));
       this._loadInstruction = false;
       return;
     }
 
-    // TODO: Implement decoding and execution of instructions here
-    this._executionService.execute(this._storageService.IR);
-    if(this._storageService.cpuState === "Halted") {
+    this._executionService.execute(this._storageService.IR); // This single line is basically an entire CPU, my brain hurts
+    if (this._storageService.cpuState === "Halted") {
       return;
     }
-
-
     this._storageService.updateCpuState("Instruction executed");
-
-    // This gets done by the execution service
-    // if (parseInt(BaseConverter.anyToDec(this._storageService.PC)) >= this._storageService.RAM_SIZE - 1) { // Loop back to 0 if end of RAM is reached
-    //   this._storageService.updatePC(0);
-    //   return;
-    // }
-    //
-    // this._storageService.updatePC(parseInt(BaseConverter.anyToDec(this._storageService.PC)) + 1);
     this._loadInstruction = true;
   }
 
@@ -65,6 +58,8 @@ export class CpuService {
     this._storageService.updateCpuState("CPU Reset");
     this._storageService.updatePC("0");
     this._storageService.updateIR("0");
+    this._storageService.initFlags();
+    this._storageService.initRegisters();
   }
 
   createRegisterMap(): void {
@@ -102,10 +97,7 @@ export class CpuService {
     this.instructionsImm.set("LSR", "0x100B"); // LSR imm16
     this.instructionsImm.set("ABS", "0x100C"); // ABS imm16
     this.instructionsImm.set("NEG", "0x100D"); // NEG imm16
-    // INC and DEC can't have immediate operands
-    // this.instructionsImm.set("INC", "0x100E"); // INC imm16
-    // this.instructionsImm.set("DEC", "0x100F"); // DEC imm16
-    this.instructionsImm.set("LD", "0x1010");  // LD imm16
+    this.instructionsImm.set("LD", "0x100E");  // LD imm16
 
     // With memory
     this.instructionsMem.set("LD", "0x2000");  // LD mem

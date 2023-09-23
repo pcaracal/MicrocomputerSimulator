@@ -94,7 +94,7 @@ export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
 
   initFlags(): void {
     this.flags.set("SF", BaseConverter.anyToDec("0"));
-    this.flags.set("ZF", BaseConverter.anyToDec("0"));
+    this.flags.set("ZF", BaseConverter.anyToDec("1"));
     this.flags.set("OF", BaseConverter.anyToDec("0"));
     this.flags.set("CF", BaseConverter.anyToDec("0"));
     this.flags.set("PF", BaseConverter.anyToDec("0"));

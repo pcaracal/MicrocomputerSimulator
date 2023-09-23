@@ -9,7 +9,7 @@ export class ExecutionService {
   private _instr: string = "";
   private _src: string = "";
   private _dst: string = "";
-  private _imm: string = "";
+  // private _imm: string = "";
 
   private _srcVal: string = ""; // Value of source reg/mem/imm
 
@@ -60,6 +60,7 @@ export class ExecutionService {
         this._src = this.getRegFromInstr(this._instr[5]);
         this._srcVal = this._storageService.registers.get(this._src) || "";
 
+        this.selectReg();
 
         this._storageService.updatePC(BaseConverter.incrementHex(this._pc));
         break;
@@ -70,8 +71,9 @@ export class ExecutionService {
         this._src = this.getRegFromInstr(this._instr[5]);
         this._srcVal = this._storageService.registers.get(this._src) || "";
 
+        this.mov();
 
-        this._storageService.PC = (BaseConverter.incrementHex(this._pc));
+        this._storageService.updatePC(BaseConverter.incrementHex(this._pc));
         break;
       }
 
@@ -199,65 +201,200 @@ export class ExecutionService {
 
   // Math instructions
   add(): void {
+    console.log("ADD");
+    let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = eax + src;
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   sub(): void {
+    console.log("SUB");
+    let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = eax - src;
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   mul(): void {
+    console.log("MUL");
+    let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = eax * src;
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   div(): void {
+    console.log("DIV");
+    let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+
+    let result = src === 0 ? 0 : (eax / src);
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   mod(): void {
+    console.log("MOD");
+    let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = src === 0 ? 0 : (eax % src);
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   cmp(): void {
+    console.log("CMP");
+    let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = eax - src;
+    this.setFlags(result);
+    // CMP only sets flags
   }
 
   and(): void {
+    console.log("AND");
+    let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = eax & src;
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   or(): void {
+    console.log("OR");
+    let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = eax | src;
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   xor(): void {
+    console.log("XOR");
+    let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = eax ^ src;
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   not(): void {
+    console.log("NOT");
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = ~src;
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   lsl(): void {
+    console.log("LSL");
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = src << 1;
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   lsr(): void {
+    console.log("LSR");
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = src >> 1;
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   abs(): void {
+    console.log("ABS");
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = Math.abs(src);
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   neg(): void {
+    console.log("NEG");
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = -src;
+    this.setFlags(result);
+    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
   }
 
   inc(): void {
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = src + 1;
+    this.setFlags(result);
+    this._storageService.registers.set(this._src, BaseConverter.decToHex(result.toString()));
   }
 
   dec(): void {
+    let src = parseInt(BaseConverter.anyToDec(this._srcVal));
+    let result = src - 1;
+    this.setFlags(result);
+    this._storageService.registers.set(this._src, BaseConverter.decToHex(result.toString()));
   }
 
   // Management instructions
   ldi(): void { // Load imm16 into eax
+    console.log("LD imm16");
+    this._storageService.registers.set("EAX", this._srcVal);
   }
 
   ldm(): void { // Load val at mem into eax
+    console.log("LD mem");
+    const _memaddr = this._srcVal;
+    this._srcVal = this._storageService.ram.get(_memaddr) || "0";
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(this._srcVal));
   }
 
   st(): void { // Store eax into mem
+    console.log("ST mem");
+    const _memaddr = this._srcVal;
+    this._storageService.ram.set(BaseConverter.anyToHex(_memaddr), this._storageService.registers.get("EAX") || BaseConverter.anyToHex("0"));
+  }
+
+  mov(): void {
+    console.log("MOV");
+    this._storageService.registers.set(this._dst, this._srcVal);
+  }
+
+  // Helper functions
+  setFlags(result: number): void {
+    if (result < 0) {
+      this._storageService.flags.set("SF", "1");
+    } else {
+      this._storageService.flags.set("SF", "0");
+    }
+
+    if (result === 0) {
+      this._storageService.flags.set("ZF", "1");
+    } else {
+      this._storageService.flags.set("ZF", "0");
+    }
+
+    if (result > 65535) {
+      this._storageService.flags.set("OF", "1");
+    } else {
+      this._storageService.flags.set("OF", "0");
+    }
+
+    if (result > 65535) {
+      this._storageService.flags.set("CF", "1");
+    } else {
+      this._storageService.flags.set("CF", "0");
+    }
+
+    const resultBin = BaseConverter.decToBin(result.toString()).substring(2);
+    if (resultBin.split("1").length % 2 === 0 && result != 0) {
+      this._storageService.flags.set("PF", "1");
+    } else {
+      this._storageService.flags.set("PF", "0");
+    }
   }
 
 
-  // Helper functions
   selectImm16(): void {
     switch (this._instr) {
       case "0x1000":
@@ -302,7 +439,7 @@ export class ExecutionService {
       case "0x100D":
         this.neg();
         break;
-      case "0x1010":
+      case "0x100E":
         this.ldi();
         break;
       case "0x2000":
@@ -343,6 +480,59 @@ export class ExecutionService {
         break;
       case "0x200C":
         this.jnp();
+        break;
+    }
+  }
+
+  selectReg(): void {
+    switch (this._instr.substring(0, 5)) {
+      case "0x300":
+        this.add();
+        break;
+      case "0x301":
+        this.sub();
+        break;
+      case "0x302":
+        this.mul();
+        break;
+      case "0x303":
+        this.div();
+        break;
+      case "0x304":
+        this.mod();
+        break;
+      case "0x305":
+        this.cmp();
+        break;
+      case "0x306":
+        this.and();
+        break;
+      case "0x307":
+        this.or();
+        break;
+      case "0x308":
+        this.xor();
+        break;
+      case "0x309":
+        this.not();
+        break;
+      case "0x30A":
+        this.lsl();
+        break;
+      case "0x30B":
+        this.lsr();
+        break;
+      case "0x30C":
+        this.abs();
+        break;
+      case "0x30D":
+        this.neg();
+        break;
+      case "0x30E":
+        this.inc();
+        break;
+      case "0x30F":
+        this.dec();
         break;
     }
   }
