@@ -365,6 +365,20 @@ export class ExecutionService {
     this._storageService.ram.set(BaseConverter.anyToHex(_memaddr), this._storageService.registers.get("EAX") || BaseConverter.anyToHex("0"));
   }
 
+  ldr(): void { // Load value from mem addr (src reg) into eax
+    console.log("LDR");
+    const _memaddr = this._srcVal;
+    const _ldval = this._storageService.ram.get(_memaddr) || "0";
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(_ldval));
+  }
+
+  str(): void { // Store eax into mem addr (dst reg)
+    console.log("STR");
+    const _memaddr = this._srcVal;
+    const _stval = this._storageService.registers.get("EAX") || "0";
+    this._storageService.ram.set(_memaddr, BaseConverter.anyToHex(_stval));
+  }
+
   mov(): void {
     console.log("MOV");
     this._storageService.registers.set(this._dst, this._srcVal);
@@ -544,6 +558,11 @@ export class ExecutionService {
       case "0x30F":
         this.dec();
         break;
+      case "0x310" :
+        this.ldr();
+        break;
+      case "0x311" :
+        this.str();
     }
   }
 }

@@ -133,6 +133,9 @@ export class CpuService {
     this.instructionsReg.set("INC", "0x30E");  // INC <src & dst> - register is the source but also the destination, not eax
     this.instructionsReg.set("DEC", "0x30F");  // DEC <src & dst> - same as INC
 
+    this.instructionsReg.set("LD", "0x310");   // LD <src> - register holds the address of the memory location to load from
+    this.instructionsReg.set("ST", "0x311");   // ST <dst> - register holds the address of the memory location to store to
+
     // MOV gets special treatment because it has two registers
     this.instructionsReg.set("MOV", "0xF0");   // MOV <dst>, <src>
   }
