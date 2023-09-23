@@ -82,6 +82,16 @@ export class ExecutionService {
         break;
       }
     }
+
+    // Simulate overflow
+    this._storageService.registers.forEach((value, key) => {
+      let _bin = BaseConverter.anyToBin(value);
+      // console.log(_bin)
+      _bin = "0b" + _bin.substring(_bin.length - 16); // 16 bit + 2 for 0b
+      // console.log(_bin)
+      this._storageService.registers.set(key, BaseConverter.anyToHex(_bin));
+    });
+
   }
 
   // Instructions with no operands

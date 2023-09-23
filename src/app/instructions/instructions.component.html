@@ -9,7 +9,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let instruction of instructions | keyvalue; trackBy: trackByFn">
-      <td>
+      <td [class.selected-address]="pc === BaseConverter.anyToHex(indices.get(instruction.key)?.toString() || '0')">
         <span>
 <!--        {{ BaseConverter.anyToHex(instruction.key.toString()) }}-->
           {{BaseConverter.anyToHex(indices.get(instruction.key)?.toString() || "0")}}
@@ -27,5 +27,5 @@
     <button class="button-add" (click)="handleClickAddInstruction($event)">+</button>
     <button class="button-remove" (click)="handleClickRemoveLastInstruction($event)">-</button>
   </div>
-  <button (click)="handleClickCompile($event)">Cat</button>
+  <button (click)="handleClickCompile($event)">Compile</button>
 </div>

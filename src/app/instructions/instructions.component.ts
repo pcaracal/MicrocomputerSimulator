@@ -11,12 +11,17 @@ import {BaseConverter} from "../baseconverter";
 export class InstructionsComponent {
   instructions: Map<number, string>;
   indices: Map<number, number> = new Map<number, number>();
+  pc: string = "";
 
   constructor(private _storageService: StorageService, private _compilerService: CompilerService) {
     this.instructions = this._storageService.instructions;
 
     this.instructions.forEach((value, key) => {
       this.indices.set(key, key);
+    });
+
+    this._storageService.PC$.subscribe(newPC => {
+      this.pc = newPC;
     });
   }
 
