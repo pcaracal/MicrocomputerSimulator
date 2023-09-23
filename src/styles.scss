@@ -30,6 +30,10 @@ td {
   align-items: center;
 }
 
+tr{
+  height: 30px;
+}
+
 button {
   width: 100%;
   background-color: #bbbbff;
@@ -39,4 +43,9 @@ button {
   font-size: 1rem;
   border-radius: 0.25rem;
   outline: none;
+}
+
+.monospace {
+  font-family: monospace;
+  color: #00bbff;
 }

@@ -4,6 +4,11 @@
     <tr>
       <td>
         <strong>RAM</strong>
+        <select [(ngModel)]="selectedViewOption">
+          <option *ngFor="let _viewOption of viewOptions">
+            {{ _viewOption }}
+          </option>
+        </select>
       </td>
     </tr>
     </thead>
@@ -14,10 +19,13 @@
         {{ _ram.key }}
       </span>
         <input
+          *ngIf="selectedViewOption === 'hex'"
           type="text"
           [(ngModel)]="_ram.value"
-          (ngModelChange)="updateRamValue(_ram.key, $event)"
+          (ngModelChange)="updateRamValueHex(_ram.key, $event)"
         />
+        <span class="monospace" *ngIf="selectedViewOption === 'dec'">{{BaseConverter.anyToDec(_ram.value)}}</span>
+        <span class="monospace" *ngIf="selectedViewOption === 'bin'">{{BaseConverter.anyToBin(_ram.value)}}</span>
       </td>
     </tr>
     </tbody>
