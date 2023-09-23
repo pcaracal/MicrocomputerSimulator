@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {StorageService} from "./storage.service";
 import {BaseConverter} from "./baseconverter";
+import {ExecutionService} from "./execution.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class CpuService {
 
   private _loadInstruction: boolean = true;
 
-  constructor(private _storageService: StorageService) {
+  constructor(private _storageService: StorageService, private _executionService: ExecutionService) {
     this.createRegisterMap();
     this.createInstructionMap();
   }
@@ -21,6 +22,10 @@ export class CpuService {
 
   // These get called by the CPU component
   step(): void {
+    if(this._storageService.cpuState === "Halted") { // TODO: Duplicate code fix later re-arrange if statements or something like that
+      return;
+    }
+
     if (this._loadInstruction) {
       this._storageService.updateCpuState("Instruction loaded into IR");
       this._storageService.updateIR(this._storageService.ram.get(this._storageService.PC));
@@ -28,8 +33,22 @@ export class CpuService {
       return;
     }
 
+    // TODO: Implement decoding and execution of instructions here
+    this._executionService.execute(this._storageService.IR);
+    if(this._storageService.cpuState === "Halted") {
+      return;
+    }
+
+
     this._storageService.updateCpuState("Instruction executed");
-    this._storageService.updatePC(parseInt(BaseConverter.anyToDec(this._storageService.PC)) + 1);
+
+    // This gets done by the execution service
+    // if (parseInt(BaseConverter.anyToDec(this._storageService.PC)) >= this._storageService.RAM_SIZE - 1) { // Loop back to 0 if end of RAM is reached
+    //   this._storageService.updatePC(0);
+    //   return;
+    // }
+    //
+    // this._storageService.updatePC(parseInt(BaseConverter.anyToDec(this._storageService.PC)) + 1);
     this._loadInstruction = true;
   }
 
@@ -83,8 +102,9 @@ export class CpuService {
     this.instructionsImm.set("LSR", "0x100B"); // LSR imm16
     this.instructionsImm.set("ABS", "0x100C"); // ABS imm16
     this.instructionsImm.set("NEG", "0x100D"); // NEG imm16
-    this.instructionsImm.set("INC", "0x100E"); // INC imm16
-    this.instructionsImm.set("DEC", "0x100F"); // DEC imm16
+    // INC and DEC can't have immediate operands
+    // this.instructionsImm.set("INC", "0x100E"); // INC imm16
+    // this.instructionsImm.set("DEC", "0x100F"); // DEC imm16
     this.instructionsImm.set("LD", "0x1010");  // LD imm16
 
     // With memory
@@ -118,8 +138,8 @@ export class CpuService {
     this.instructionsReg.set("LSR", "0x30B");  // LSR <src>
     this.instructionsReg.set("ABS", "0x30C");  // ABS <src>
     this.instructionsReg.set("NEG", "0x30D");  // NEG <src>
-    this.instructionsReg.set("INC", "0x30E");  // INC <src>
-    this.instructionsReg.set("DEC", "0x30F");  // DEC <src>
+    this.instructionsReg.set("INC", "0x30E");  // INC <src & dst> - register is the source but also the destination, not eax
+    this.instructionsReg.set("DEC", "0x30F");  // DEC <src & dst> - same as INC
 
     // MOV gets special treatment because it has two registers
     this.instructionsReg.set("MOV", "0xF0");   // MOV <dst>, <src>

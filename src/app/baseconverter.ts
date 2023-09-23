@@ -85,4 +85,16 @@ export class BaseConverter {
       return this.decToBin(any);
     }
   }
+
+  public static incrementHex(hex: string): string {
+    let dec = this.hexToDec(hex);
+    dec = (parseInt(dec) + 1).toString();
+    return this.decToHex(dec);
+  }
+
+  public static decrementHex(hex: string): string {
+    let dec = this.hexToDec(hex);
+    dec = (parseInt(dec) - 1).toString();
+    return this.decToHex(dec);
+  }
 }

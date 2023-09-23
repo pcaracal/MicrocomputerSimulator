@@ -6,6 +6,8 @@ import {BehaviorSubject, Observable} from "rxjs";
   providedIn: 'root'
 })
 export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
+  readonly RAM_SIZE: number = 32;
+
   // Memory
   instructions: Map<number, string> = new Map<number, string>(); // Instructions. User writes assembly code here, which is then converted to machine code and stored in the RAM. (Mnemonic -> Machine Code)
   ram: Map<string, string> = new Map<string, string>(); // Main storage of the computer (all in hex). The user can manually edit this.
@@ -71,7 +73,7 @@ export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
   }
 
   clearRam(): void {
-    for (let i = 0; i < 32; i++) {
+    for (let i = 0; i < this.RAM_SIZE; i++) {
       this.ram.set(BaseConverter.decToHex(i.toString()), BaseConverter.anyToHex("0"));
     }
     this.initRegisters();
