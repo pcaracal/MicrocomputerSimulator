@@ -9,7 +9,7 @@ body {
   position: relative;
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"] {
   border: none;
   background: #43454A;
   color: inherit;
@@ -30,7 +30,7 @@ td {
   align-items: center;
 }
 
-tr{
+tr {
   height: 30px;
 }
 

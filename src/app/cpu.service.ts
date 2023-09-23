@@ -46,11 +46,22 @@ export class CpuService {
   }
 
   run(): void {
-    // TODO: This should loop step() at rate of ClockHz until HLT is encountered, then halt()
+    let hz = 1000
+    if (this._storageService.ClockHz) hz /= this._storageService.ClockHz;
+
+    this._storageService.updateCpuState("Started");
+    const interval = setInterval(() => {
+      if (this._storageService.cpuState === "Halted" || this._storageService.cpuState === "CPU Reset") {
+        clearInterval(interval);
+        return;
+      }
+      this.step();
+    }, hz);
   }
 
   halt(): void {
     // TODO: This should stop the loop in run()
+    this._storageService.updateCpuState("Halted");
   }
 
   reset(): void {
