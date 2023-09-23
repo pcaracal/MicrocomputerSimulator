@@ -9,7 +9,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let _ram of ram | keyvalue; trackBy: trackByFn">
-      <td>
+      <td [class.selected-address]="PC === _ram.key">
       <span>
         {{ _ram.key }}
       </span>

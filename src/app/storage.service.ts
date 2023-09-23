@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BaseConverter} from "./baseconverter";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,32 @@ export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
   // Clock
   ClockHz: number = 0; // Clock speed in Hz (obviously)
 
+  cpuState: string = "CPU Reset"; // "CPU Reset", "Instruction loaded into IR", Instruction executed", "Halted"
+
+
+  // Observable string sources
+  private _cpuStateSubject: BehaviorSubject<string> = new BehaviorSubject<string>(this.cpuState);
+  private _PCSubject: BehaviorSubject<string> = new BehaviorSubject<string>(this.PC);
+  private _IRSubject: BehaviorSubject<string> = new BehaviorSubject<string>(this.IR);
+  cpuState$: Observable<string> = this._cpuStateSubject.asObservable();
+  PC$: Observable<string> = this._PCSubject.asObservable();
+  IR$: Observable<string> = this._IRSubject.asObservable();
+
+  updateCpuState(newState: string): void {
+    this.cpuState = newState;
+    this._cpuStateSubject.next(this.cpuState);
+  }
+
+  updatePC(newPC: any): void {
+    this.PC = BaseConverter.anyToHex(newPC.toString());
+    this._PCSubject.next(this.PC);
+  }
+
+  updateIR(newIR: any): void {
+    this.IR = BaseConverter.anyToHex(newIR.toString());
+    this._IRSubject.next(this.IR);
+  }
+
   constructor() {
     for (let i = 0; i < 16; i++) {
       this.instructions.set(i, "NOP");
@@ -63,10 +90,10 @@ export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
   }
 
   initFlags(): void {
-    this.flags.set("SF", BaseConverter.anyToBin("0"));
-    this.flags.set("ZF", BaseConverter.anyToBin("0"));
-    this.flags.set("OF", BaseConverter.anyToBin("0"));
-    this.flags.set("CF", BaseConverter.anyToBin("0"));
-    this.flags.set("PF", BaseConverter.anyToBin("0"));
+    this.flags.set("SF", BaseConverter.anyToDec("0"));
+    this.flags.set("ZF", BaseConverter.anyToDec("0"));
+    this.flags.set("OF", BaseConverter.anyToDec("0"));
+    this.flags.set("CF", BaseConverter.anyToDec("0"));
+    this.flags.set("PF", BaseConverter.anyToDec("0"));
   }
 }

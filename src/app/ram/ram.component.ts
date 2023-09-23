@@ -9,13 +9,17 @@ import {BaseConverter} from "../baseconverter";
 })
 export class RamComponent {
   ram: Map<string, string>;
+  PC: string = "";
 
-  constructor(private storageService: StorageService) {
-    this.ram = this.storageService.ram;
+  constructor(private _storageService: StorageService) {
+    this.ram = this._storageService.ram;
+    this._storageService.PC$.subscribe(newPC => {
+      this.PC = newPC;
+    });
   }
 
   updateRamValue(key: string, newValue: string) {
-    this.storageService.ram.set(key, newValue);
+    this._storageService.ram.set(key, newValue);
   }
 
   trackByFn(index: number, item: any) {

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {StorageService} from "./storage.service";
+import {BaseConverter} from "./baseconverter";
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,42 @@ export class CpuService {
   instructionsMem: Map<string, string> = new Map<string, string>(); // Instruction set (Mnemonic -> Machine Code (HEX 16-bit). Rightmost 4 bits is for the register, and the rest is for the opcode.)
   registers: Map<string, string> = new Map<string, string>(); // Registers (HEX 4-bit)
 
+  private _loadInstruction: boolean = true;
+
   constructor(private _storageService: StorageService) {
     this.createRegisterMap();
     this.createInstructionMap();
   }
 
+
+  // These get called by the CPU component
+  step(): void {
+    if (this._loadInstruction) {
+      this._storageService.updateCpuState("Instruction loaded into IR");
+      this._storageService.updateIR(this._storageService.ram.get(this._storageService.PC));
+      this._loadInstruction = false;
+      return;
+    }
+
+    this._storageService.updateCpuState("Instruction executed");
+    this._storageService.updatePC(parseInt(BaseConverter.anyToDec(this._storageService.PC)) + 1);
+    this._loadInstruction = true;
+  }
+
+  run(): void {
+    // TODO: This should loop step() at rate of ClockHz until HLT is encountered, then halt()
+  }
+
+  halt(): void {
+    // TODO: This should stop the loop in run()
+  }
+
+  reset(): void {
+    this._loadInstruction = true;
+    this._storageService.updateCpuState("CPU Reset");
+    this._storageService.updatePC("0");
+    this._storageService.updateIR("0");
+  }
 
   createRegisterMap(): void {
     this.registers.set("EAX", "0");
