@@ -7,6 +7,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 })
 export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
   readonly RAM_SIZE: number = 32;
+  readonly MIN_INSTRUCTION_SIZE: number = 16;
 
   // Memory
   instructions: Map<number, string> = new Map<number, string>(); // Instructions. User writes assembly code here, which is then converted to machine code and stored in the RAM. (Mnemonic -> Machine Code)
@@ -65,7 +66,7 @@ export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
   }
 
   constructor() {
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < this.MIN_INSTRUCTION_SIZE; i++) {
       this.instructions.set(i, "NOP");
     }
 
