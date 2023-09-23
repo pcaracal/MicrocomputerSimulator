@@ -1,0 +1,31 @@
+<div>
+  <table>
+    <thead>
+    <tr>
+      <td>
+        <strong>Instructions</strong>
+      </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let instruction of instructions | keyvalue; trackBy: trackByFn">
+      <td [class.selected-address]="pc === BaseConverter.anyToHex(indices.get(instruction.key)?.toString() || '0')">
+        <span>
+<!--        {{ BaseConverter.anyToHex(instruction.key.toString()) }}-->
+          {{BaseConverter.anyToHex(indices.get(instruction.key)?.toString() || "0")}}
+        </span>
+        <input
+          type="text"
+          [(ngModel)]="instruction.value"
+          (ngModelChange)="updateInstructionValue(instruction.key, $event)"
+        />
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="add-remove-instructions">
+    <button class="button-add" (click)="handleClickAddInstruction($event)">+</button>
+    <button class="button-remove" (click)="handleClickRemoveLastInstruction($event)">-</button>
+  </div>
+  <button (click)="handleClickCompile($event)">Compile</button>
+</div>

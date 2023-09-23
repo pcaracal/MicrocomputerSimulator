@@ -1,0 +1,25 @@
+.selected-address {
+  border: 1px solid #00bbff !important;
+}
+
+table {
+  width: 300px;
+}
+
+td {
+  border: 1px solid transparent;
+}
+
+span {
+  height: 26px;
+}
+
+select {
+  width: 5rem;
+  height: 100%;
+  border: none;
+  background-color: #1E1F22;
+  font-size: 20px;
+  color: #00bbff;
+  outline: none;
+}

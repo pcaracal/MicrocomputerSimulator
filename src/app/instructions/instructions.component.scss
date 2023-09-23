@@ -1,0 +1,22 @@
+td {
+  border: 1px solid transparent;
+}
+
+.add-remove-instructions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-add {
+  margin-right: 5px;
+}
+
+.button-remove {
+  margin-left: 5px;
+}
+
+.selected-address {
+  border: 1px solid #00bbff !important;
+}
+

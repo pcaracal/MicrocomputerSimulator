@@ -4,21 +4,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { CPUComponent } from './cpu/cpu.component';
 import { RamComponent } from './ram/ram.component';
-import { RomComponent } from './rom/rom.component';
 import { ClockComponent } from './clock/clock.component';
 import { IoComponent } from './io/io.component';
+import { InstructionsComponent } from './instructions/instructions.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     CPUComponent,
     RamComponent,
-    RomComponent,
     ClockComponent,
-    IoComponent
+    IoComponent,
+    InstructionsComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

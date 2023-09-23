@@ -1,1 +1,66 @@
-<p>cpu works!</p>
+<div class="cpu-container">
+  <div class="status-bar">
+    {{cpuState}}
+  </div>
+
+  <div class="cpu-control">
+    <button (click)="handleClickStep($event)">Step</button>
+    <button (click)="handleClickRun($event)">Run</button>
+    <button (click)="handleClickHalt($event)">Halt</button>
+    <button (click)="handleClickReset($event)">Reset</button>
+  </div>
+
+  <div class="pc-ir-container">
+    <div>
+      <strong>PC</strong>
+      <input type="text" [(ngModel)]="PC" (ngModelChange)="updatePC($event)"/>
+    </div>
+    <div>
+      <strong>IR</strong>
+      <input type="text" [(ngModel)]="IR" (ngModelChange)="updateIR($event)"/>
+    </div>
+  </div>
+
+  <div class="register-flag-container">
+    <table>
+      <thead>
+      <tr>
+        <th colspan="2">Registers</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let _register of registers | keyvalue; trackBy: trackByFn">
+        <td>
+          <div class="centered-text">
+            {{_register.key}}
+          </div>
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="_register.value"
+                 (ngModelChange)="updateRegisterValue(_register.key, $event)"
+          />
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <table class="flag-table">
+      <thead>
+      <tr>
+        <th colspan="2">Flags</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let _flag of flags | keyvalue">
+        <td>
+          <div class="centered-text">
+            {{_flag.key}}
+          </div>
+        </td>
+        <td>{{_flag.value}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-clock></app-clock>
+</div>
