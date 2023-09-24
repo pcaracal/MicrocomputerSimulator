@@ -28,6 +28,10 @@ export class CompilerService {
     const operand = mnemonicArr[1];
     const operand2 = mnemonicArr[2];
 
+    if (instruction === "") {
+      instruction = "NOP";
+    }
+
     if (instruction === "NOP" || instruction === "HLT") { // The 2 cases where there are no operands
       // @ts-ignore
       const machineCode = this._cpuService.instructionsImm.get(instruction);
