@@ -14,4 +14,12 @@
   margin-left: 50px;
 }
 
+h1 {
+  max-width: max-content;
+}
 
+.title-guide {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}

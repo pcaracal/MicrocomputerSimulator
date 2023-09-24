@@ -3,6 +3,12 @@
     <thead>
     <tr>
       <td>
+        <input class="margin-0" type="text" [(ngModel)]="count"/>
+        <button class="margin-0" (click)="resetRam()">Reset</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
         <strong>RAM</strong>
         <select [(ngModel)]="selectedViewOption">
           <option *ngFor="let _viewOption of viewOptions">

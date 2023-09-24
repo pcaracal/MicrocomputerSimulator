@@ -1,0 +1,282 @@
+<button class="button-guide" (click)="toggleShow()">Guide</button>
+
+<div *ngIf="isShown" class="overlay">
+  <div class="overlay-content">
+    <h1>Microcomputer Simulator</h1>
+    <sub>By Peter Schreivogel</sub>
+    <sub><a href="https://github.com/pcaracal/MicrocomputerSimulator">Github Repository</a></sub>
+    <button (click)="toggleShow()">Close</button>
+    <hr>
+    <div class="guide-main">
+      <h2 class="pointer" (click)="toggleIntroduction()">Introduction</h2>
+      <p *ngIf="showIntroduction">
+        This web application is a simulator for a 16-bit microcomputer.
+        It is based on the Von-Neumann architecture, which means that the program and the data are stored in the same
+        memory. The memory is divided into 16-bit words (A word is a group of 16 bits).<br><br>
+        The CPU has 8 registers and 5 flags. The registers are all general purpose registers, because this is
+        a simplified model. The flags are set by all ALU (Arithmetic Logic Unit) operations.
+      </p>
+      <h2 class="pointer" (click)="toggleUsage()">Usage</h2>
+      <p *ngIf="showUsage">
+        First you have to either load a program into the instruction input list (unimplemented) or write it manually.
+        The list shows the memory addresses where the machine code of the instructions will be stored. The first
+        instruction will be stored at address 0x0000, the second at 0x0001 etc.<br><br>
+        The program counter (PC) is a register that holds the address of the next instruction to be executed.<br><br>
+        The instruction register (IR) is a register that holds the machine code of the instruction that is currently
+        being executed.<br><br>
+        If a mnemonic has an immediate operand (imm16) or a memory address operand (mem), it will be stored in the
+        subsequent memory address of the instruction. (Instruction goes into 0x0000, immediate operand goes into 0x0001)<br>
+        The instruction input list will reflect this by incrementing all subsequent addresses by 1, which increases ease
+        of use.<br><br>
+        If a mnemonic has a source and/or a destination register operand (src, dst), the mnemonic will be stored in the
+        last 4-8 bits of the machine code.
+      </p>
+      <h2 class="pointer" (click)="toggleNotation()">Notation and Syntax</h2>
+      <div *ngIf="showNotation">
+        <h3>Operands</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Operand</th>
+            <th>Meaning</th>
+            <th>Notation</th>
+            <th>Example</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>imm16</td>
+            <td>16-bit immediate value</td>
+            <td>#0x0000</td>
+            <td>ADD #0x00FF</td>
+          </tr>
+          <tr>
+            <td>mem</td>
+            <td>Memory address</td>
+            <td>[0x0000]</td>
+            <td>LD [0x000F]</td>
+          </tr>
+          <tr>
+            <td>src</td>
+            <td>Source Register</td>
+            <td>eax</td>
+            <td>XOR eax</td>
+          </tr>
+          <tr>
+            <td>dst, src</td>
+            <td>Source and Destination Register (Only in MOV)</td>
+            <td>eax, ebx</td>
+            <td>MOV ecx, eax</td>
+          </tr>
+          </tbody>
+        </table>
+        <p></p>
+        <h3>Instructions</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Instruction</th>
+            <th>Meaning</th>
+            <th>Machine Code</th>
+            <th>Example</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>LD imm16</td>
+            <td>Loads the value of imm16 into EAX</td>
+            <td>0x100E</td>
+            <td>LD #0x000F</td>
+          </tr>
+          <tr>
+            <td>LD mem</td>
+            <td>Loads the value at mem into EAX</td>
+            <td>0x2000</td>
+            <td>LD [0x000F]</td>
+          </tr>
+          <tr>
+            <td>LD src</td>
+            <td>Loads the value at mem addr from src into EAX</td>
+            <td>0x310s</td>
+            <td>LD ebx</td>
+          </tr>
+          <tr>
+            <td>ST mem</td>
+            <td>Stores the value of EAX at mem</td>
+            <td>0x2001</td>
+            <td>ST [0x000F]</td>
+          </tr>
+          <tr>
+            <td>ST src</td>
+            <td>Stores the value of EAX at mem addr from src</td>
+            <td>0x311s</td>
+            <td>ST ebx</td>
+          </tr>
+          <tr>
+            <td>MOV dst, src</td>
+            <td>Copies the value of src into dst</td>
+            <td>0xF0ds</td>
+            <td>MOV ecx, ebx</td>
+          </tr>
+          <tr>
+            <td>ADD (imm16 | src)</td>
+            <td>Adds the value of imm16 or src to EAX</td>
+            <td>0x1000 | 0x300s</td>
+            <td>ADD #0x000F | ADD ebx</td>
+          </tr>
+          <tr>
+            <td>SUB (imm16 | src)</td>
+            <td>Subtracts the value of imm16 or src from EAX</td>
+            <td>0x1001 | 0x301s</td>
+            <td>SUB #0x000F | SUB ebx</td>
+          </tr>
+          <tr>
+            <td>MUL (imm16 | src)</td>
+            <td>Multiplies EAX with the value of imm16 or src</td>
+            <td>0x1002 | 0x302s</td>
+            <td>MUL #0x000F | MUL ebx</td>
+          </tr>
+          <tr>
+            <td>DIV (imm16 | src)</td>
+            <td>Divides EAX by the value of imm16 or src</td>
+            <td>0x1003 | 0x303s</td>
+            <td>DIV #0x000F | DIV ebx</td>
+          </tr>
+          <tr>
+            <td>MOD (imm16 | src)</td>
+            <td>Remainder of the division of EAX by the value of imm16 or src</td>
+            <td>0x1004 | 0x304s</td>
+            <td>MOD #0x000F | MOD ebx</td>
+          </tr>
+          <tr>
+            <td>CMP (imm16 | src)</td>
+            <td>Compares EAX with the value of imm16 or src and sets the flags accordingly</td>
+            <td>0x1005 | 0x305s</td>
+            <td>CMP #0x000F | CMP ebx</td>
+          </tr>
+          <tr>
+            <td>AND (imm16 | src)</td>
+            <td>Bitwise AND of EAX with the value of imm16 or src</td>
+            <td>0x1006 | 0x306s</td>
+            <td>AND #0x000F | AND ebx</td>
+          </tr>
+          <tr>
+            <td>OR (imm16 | src)</td>
+            <td>Bitwise OR of EAX with the value of imm16 or src</td>
+            <td>0x1007 | 0x307s</td>
+            <td>OR #0x000F | OR ebx</td>
+          </tr>
+          <tr>
+            <td>XOR (imm16 | src)</td>
+            <td>Bitwise XOR of EAX with the value of imm16 or src</td>
+            <td>0x1008 | 0x308s</td>
+            <td>XOR #0x000F | XOR ebx</td>
+          </tr>
+          <tr>
+            <td>NOT (imm16 | src)</td>
+            <td>Bitwise NOT of imm16 or src</td>
+            <td>0x1009 | 0x309s</td>
+            <td>NOT #0x000F | NOT ebx</td>
+          </tr>
+          <tr>
+            <td>LSL (imm16 | src)</td>
+            <td>Logical shift left of imm16 or src</td>
+            <td>0x100A | 0x30As</td>
+            <td>LSL #0x000F | LSL ebx</td>
+          </tr>
+          <tr>
+            <td>LSR (imm16 | src)</td>
+            <td>Logical shift right of imm16 or src</td>
+            <td>0x100B | 0x30Bs</td>
+            <td>LSR #0x000F | LSR ebx</td>
+          </tr>
+          <tr>
+            <td>ABS (imm16 | src)</td>
+            <td>Absolute value of imm16 or src</td>
+            <td>0x100C | 0x30Cs</td>
+            <td>ABS #0x000F | ABS ebx</td>
+          </tr>
+          <tr>
+            <td>NEG (imm16 | src)</td>
+            <td>Negation of imm16 or src</td>
+            <td>0x100D | 0x30Ds</td>
+            <td>NEG #0x000F | NEG ebx</td>
+          </tr>
+          <tr>
+            <td>INC src</td>
+            <td>Increment of src by 1 and store the result in src</td>
+            <td>0x30Es</td>
+            <td>INC ebx</td>
+          </tr>
+          <tr>
+            <td>DEC src</td>
+            <td>Decrement of src by 1 and store the result in src</td>
+            <td>0x30Fs</td>
+            <td>DEC ebx</td>
+          </tr>
+          <tr>
+            <td>JMP mem</td>
+            <td>Jump to the address mem</td>
+            <td>0x2002</td>
+            <td>JMP [0x000F]</td>
+          </tr>
+          <tr>
+            <td>JS mem</td>
+            <td>Jump to the address mem if the sign flag is set</td>
+            <td>0x2003</td>
+            <td>JS [0x000F]</td>
+          </tr>
+          <tr>
+            <td>JNS mem</td>
+            <td>Jump to the address mem if the sign flag is not set</td>
+            <td>0x2004</td>
+            <td>JNS [0x000F]</td>
+          </tr>
+          <tr>
+            <td>JZ mem</td>
+            <td>Jump to the address mem if the zero flag is set</td>
+            <td>0x2005</td>
+            <td>JZ [0x000F]</td>
+          </tr>
+          <tr>
+            <td>JNZ mem</td>
+            <td>Jump to the address mem if the zero flag is not set</td>
+            <td>0x2006</td>
+            <td>JNZ [0x000F]</td>
+          </tr>
+          <tr>
+            <td>JO mem</td>
+            <td>Jump to the address mem if the overflow flag is set</td>
+            <td>0x2007</td>
+            <td>JO [0x000F]</td>
+          </tr>
+          <tr>
+            <td>JNO mem</td>
+            <td>Jump to the address mem if the overflow flag is not set</td>
+            <td>0x2008</td>
+            <td>JNO [0x000F]</td>
+          </tr>
+          <tr>
+            <td>JC mem</td>
+            <td>Jump to the address mem if the carry flag is set</td>
+            <td>0x2009</td>
+            <td>JC [0x000F]</td>
+          </tr>
+          <tr>
+            <td>JNC mem</td>
+            <td>Jump to the address mem if the carry flag is not set</td>
+            <td>0x200A</td>
+            <td>JNC [0x000F]</td>
+          </tr>
+          <tr>
+            <td>JP mem</td>
+            <td>Jump to the address mem if the parity flag is set</td>
+            <td>0x200B</td>
+            <td>JP [0x000F]</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
