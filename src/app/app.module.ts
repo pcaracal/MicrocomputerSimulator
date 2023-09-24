@@ -8,6 +8,7 @@ import { ClockComponent } from './clock/clock.component';
 import { IoComponent } from './io/io.component';
 import { InstructionsComponent } from './instructions/instructions.component';
 import {FormsModule} from "@angular/forms";
+import { GuideComponent } from './guide/guide.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {FormsModule} from "@angular/forms";
     RamComponent,
     ClockComponent,
     IoComponent,
-    InstructionsComponent
+    InstructionsComponent,
+    GuideComponent
   ],
   imports: [
     BrowserModule,
