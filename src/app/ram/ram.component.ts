@@ -14,6 +14,12 @@ export class RamComponent {
   viewOptions = ['hex', 'bin', 'dec'];
   selectedViewOption = 'hex';
 
+  count: number = this._storageService.RAM_SIZE;
+
+  resetRam() {
+    this._storageService.setRamSize(this.count);
+  }
+
   constructor(private _storageService: StorageService) {
     this.ram = this._storageService.ram;
     this._storageService.PC$.subscribe(newPC => {
