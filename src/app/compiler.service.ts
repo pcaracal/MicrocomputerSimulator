@@ -88,7 +88,13 @@ export class CompilerService {
       // @ts-ignore
       const machineCode = this._cpuService.instructionsImm.get(instruction);
       let imm16 = operand.substring(1, operand.length); // Negative number magic
-      imm16 = BaseConverter.signedDecToBin(imm16);
+      if (imm16[1].toLowerCase() === "b") {
+        imm16 = imm16.substring(2);
+        imm16 = imm16.padStart(16, "0");
+        imm16 = BaseConverter.signedBinToDec(imm16);
+      } else if (imm16[1].toLowerCase() != "x") {
+        imm16 = BaseConverter.signedDecToBin(imm16);
+      }
 
       if (machineCode) {
         // Machine code goes into ramIndex, imm16 goes into ramIndex + 1
