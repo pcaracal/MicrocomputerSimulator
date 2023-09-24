@@ -97,4 +97,28 @@ export class BaseConverter {
     dec = (parseInt(dec) - 1).toString();
     return this.decToHex(dec);
   }
+
+  public static signedDecToBin(dec: string): string { // 2's complement
+    const decimal = parseInt(dec, 10);
+    const binary = (decimal & 0xFFFF).toString(2);
+    const padded = binary.padStart(16, "0");
+    return "0b" + padded;
+  }
+
+  public static signedHexToDec(hex: string): string { // 2's complement
+    const decimal = parseInt(hex, 16);
+    const binary = this.signedDecToBin(decimal.toString());
+    return this.signedBinToDec(binary);
+  }
+
+  public static signedBinToDec(bin: string): string { // 2's complement
+    bin = bin.substring(2);
+    const isNegative = bin.charAt(0) === "1";
+    let decimal = parseInt(bin, 2);
+    if (isNegative) {
+      decimal = (decimal ^ 0xFFFF) + 1;
+    }
+    return isNegative ? "-" + decimal.toString() : decimal.toString();
+  }
+
 }

@@ -30,7 +30,7 @@
           [(ngModel)]="_ram.value"
           (ngModelChange)="updateRamValueHex(_ram.key, $event)"
         />
-        <span class="monospace" *ngIf="selectedViewOption === 'dec'">{{BaseConverter.anyToDec(_ram.value)}}</span>
+        <span class="monospace" *ngIf="selectedViewOption === 'dec'">{{BaseConverter.signedHexToDec(_ram.value)}}</span>
         <span class="monospace" *ngIf="selectedViewOption === 'bin'">{{BaseConverter.anyToBin(_ram.value)}}</span>
       </td>
     </tr>
