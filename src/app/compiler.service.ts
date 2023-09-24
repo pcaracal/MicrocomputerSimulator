@@ -87,7 +87,8 @@ export class CompilerService {
     if (operand && operand.at(0) === "#" && !operand2) { // Has operand, is imm16
       // @ts-ignore
       const machineCode = this._cpuService.instructionsImm.get(instruction);
-      const imm16 = operand.substring(1, operand.length);
+      let imm16 = operand.substring(1, operand.length); // Negative number magic
+      imm16 = BaseConverter.signedDecToBin(imm16);
 
       if (machineCode) {
         // Machine code goes into ramIndex, imm16 goes into ramIndex + 1
