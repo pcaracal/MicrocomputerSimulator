@@ -31,6 +31,69 @@
         If a mnemonic has a source and/or a destination register operand (src, dst), the mnemonic will be stored in the
         last 4-8 bits of the machine code.
       </p>
+      <h3>Registers and Flags</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>Register</th>
+          <th>Meaning</th>
+          <th>Flag</th>
+          <th>Meaning</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>EAX</td>
+          <td>Accumulator</td>
+          <td>CF</td>
+          <td>Carry Flag</td>
+        </tr>
+        <tr>
+          <td>EBX</td>
+          <td>General purpose register</td>
+          <td>OF</td>
+          <td>Overflow Flag</td>
+        </tr>
+        <tr>
+          <td>ECX</td>
+          <td>General purpose register</td>
+          <td>PF</td>
+          <td>Parity Flag</td>
+        </tr>
+        <tr>
+          <td>EDX</td>
+          <td>General purpose register</td>
+          <td>SF</td>
+          <td>Sign Flag</td>
+        </tr>
+        <tr>
+          <td>ESP</td>
+          <td>General purpose register</td>
+          <td>ZF</td>
+          <td>Zero Flag</td>
+        </tr>
+        <tr>
+          <td>EBP</td>
+          <td>General purpose register</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>ESI</td>
+          <td>General purpose register</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>EDI</td>
+          <td>General purpose register</td>
+          <td></td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+
+
       <h2 class="pointer" (click)="toggleNotation()">Notation and Syntax</h2>
       <div *ngIf="showNotation">
         <h3>Operands</h3>
@@ -46,9 +109,21 @@
           <tbody>
           <tr>
             <td>imm16</td>
-            <td>16-bit immediate value</td>
+            <td>16-bit immediate value (Hex)</td>
             <td>#0x0000</td>
             <td>ADD #0x00FF</td>
+          </tr>
+          <tr>
+            <td>imm16</td>
+            <td>16-bit immediate value (Decimal)</td>
+            <td>#00000</td>
+            <td>ADD #255</td>
+          </tr>
+          <tr>
+            <td>imm16</td>
+            <td>16-bit immediate value (Binary)</td>
+            <td>#0b0000000000000000</td>
+            <td>ADD #0b11111111</td>
           </tr>
           <tr>
             <td>mem</td>

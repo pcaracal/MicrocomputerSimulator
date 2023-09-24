@@ -1,5 +1,39 @@
 # MicrocomputerSimulator
 
+## Deployment
+
+This project is deployed at https://pcaracal.github.io/MicrocomputerSimulator/
+
+This project uses Github Actions to automatically deploy the project to Github Pages. The workflow is defined in
+`.github/workflows/jekyll-gh-pages.yml`. The workflow is triggered by pushing to the `main` branch.
+
+## Introduction
+
+You will also find this documentation and more in the application itself, by clicking the "Guide" button at the right of the title.
+
+This web application is a simulator for a 16-bit microcomputer.
+It is based on the Von-Neumann architecture, which means that the program and the data are stored in the same
+memory. The memory is divided into 16-bit words (A word is a group of 16 bits).<br>
+The CPU has 8 registers and 5 flags. The registers are all general purpose registers, because this is
+a simplified model. The flags are set by all ALU (Arithmetic Logic Unit) operations.
+
+## Usage
+
+First you have to either load a program into the instruction input list (unimplemented) or write it manually.
+The list shows the memory addresses where the machine code of the instructions will be stored. The first
+instruction will be stored at address 0x0000, the second at 0x0001 etc.<br>
+The program counter (PC) is a register that holds the address of the next instruction to be executed.
+The instruction register (IR) is a register that holds the machine code of the instruction that is currently
+being executed.<br>
+If a mnemonic has an immediate operand (imm16) or a memory address operand (mem), it will be stored in the
+subsequent memory address of the instruction. (Instruction goes into 0x0000, immediate operand goes into 0x0001)<br>
+The instruction input list will reflect this by incrementing all subsequent addresses by 1, which increases ease
+of use.<br>
+If a mnemonic has a source and/or a destination register operand (src, dst), the mnemonic will be stored in the
+last 4-8 bits of the machine code.
+
+# Angular Documentation
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
 
 ## Development server
