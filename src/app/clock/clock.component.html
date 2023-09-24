@@ -1,5 +1,5 @@
 <div class="main-clock">
   <strong>Clock Rate</strong>
-  <input type="text" [(ngModel)]="ClockHz" (ngModelChange)="handleClockHzChange($event)"
-         (selectionchange)="handleClockHzSelect()" [value]="ClockHz"/>
+  <input type="text" [(ngModel)]="ClockHz" (ngModelChange)="handleClockHzChange($event)" [value]="ClockHz"/>
+  <button (click)="handleClockHzSelect()">Set</button>
 </div>

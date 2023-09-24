@@ -4,4 +4,16 @@
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
+  align-items: baseline;
+}
+
+input {
+  height: 2rem;
+  width: 5rem;
+}
+
+button {
+  margin: 0 0.5rem;
+  width: 5rem;
+  height: 2rem;
 }

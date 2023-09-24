@@ -28,6 +28,10 @@ export class CompilerService {
     const operand = mnemonicArr[1];
     const operand2 = mnemonicArr[2];
 
+    if (instruction === "") {
+      instruction = "NOP";
+    }
+
     if (instruction === "NOP" || instruction === "HLT") { // The 2 cases where there are no operands
       // @ts-ignore
       const machineCode = this._cpuService.instructionsImm.get(instruction);
@@ -83,7 +87,17 @@ export class CompilerService {
     if (operand && operand.at(0) === "#" && !operand2) { // Has operand, is imm16
       // @ts-ignore
       const machineCode = this._cpuService.instructionsImm.get(instruction);
-      const imm16 = operand.substring(1, operand.length);
+      let imm16 = operand.substring(1, operand.length); // Negative number magic
+      if (imm16.length > 1) {
+        if (imm16[1].toLowerCase() === "b") {
+          imm16 = imm16.substring(2);
+          imm16 = imm16.padStart(16, "0");
+          imm16 = BaseConverter.signedBinToDec(imm16);
+        } else if (imm16[1].toLowerCase() != "x") {
+          imm16 = BaseConverter.signedDecToBin(imm16);
+        }
+      }
+      console.log(imm16)
 
       if (machineCode) {
         // Machine code goes into ramIndex, imm16 goes into ramIndex + 1

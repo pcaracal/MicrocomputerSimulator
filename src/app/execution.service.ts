@@ -215,8 +215,9 @@ export class ExecutionService {
     let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = eax + src;
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   sub(): void {
@@ -224,8 +225,9 @@ export class ExecutionService {
     let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = eax - src;
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   mul(): void {
@@ -233,8 +235,9 @@ export class ExecutionService {
     let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = eax * src;
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   div(): void {
@@ -243,8 +246,9 @@ export class ExecutionService {
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
 
     let result = src === 0 ? 0 : (eax / src);
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   mod(): void {
@@ -252,8 +256,9 @@ export class ExecutionService {
     let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = src === 0 ? 0 : (eax % src);
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   cmp(): void {
@@ -261,7 +266,8 @@ export class ExecutionService {
     let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = eax - src;
-    this.setFlags(result);
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
     // CMP only sets flags
   }
 
@@ -270,8 +276,9 @@ export class ExecutionService {
     let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = eax & src;
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   or(): void {
@@ -279,8 +286,9 @@ export class ExecutionService {
     let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = eax | src;
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   xor(): void {
@@ -288,62 +296,70 @@ export class ExecutionService {
     let eax = parseInt(BaseConverter.anyToDec(this._storageService.registers.get("EAX") || "0"));
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = eax ^ src;
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   not(): void {
     console.log("NOT");
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = ~src;
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   lsl(): void {
     console.log("LSL");
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = src << 1;
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   lsr(): void {
     console.log("LSR");
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = src >> 1;
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   abs(): void {
     console.log("ABS");
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = Math.abs(src);
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   neg(): void {
     console.log("NEG");
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = -src;
-    this.setFlags(result);
-    this._storageService.registers.set("EAX", BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   inc(): void {
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = src + 1;
-    this.setFlags(result);
-    this._storageService.registers.set(this._src, BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set(this._src, BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   dec(): void {
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
     let result = src - 1;
-    this.setFlags(result);
-    this._storageService.registers.set(this._src, BaseConverter.decToHex(result.toString()));
+    this.setCFOF(result);
+    this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
+    this._storageService.registers.set(this._src, BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   // Management instructions
@@ -384,8 +400,19 @@ export class ExecutionService {
     this._storageService.registers.set(this._dst, this._srcVal);
   }
 
+  setCFOF(result: number): void {
+    if (result > 65535) {
+      this._storageService.flags.set("OF", "1");
+      this._storageService.flags.set("CF", "1");
+    } else {
+      this._storageService.flags.set("OF", "0");
+      this._storageService.flags.set("CF", "0");
+    }
+  }
+
   // Helper functions
   setFlags(result: number): void {
+    const binRes = BaseConverter.decToBin(result.toString()).substring(2);
     if (result < 0) {
       this._storageService.flags.set("SF", "1");
     } else {
@@ -398,17 +425,18 @@ export class ExecutionService {
       this._storageService.flags.set("ZF", "0");
     }
 
-    if (result > 65535) {
-      this._storageService.flags.set("OF", "1");
-    } else {
-      this._storageService.flags.set("OF", "0");
-    }
-
-    if (result > 65535) {
-      this._storageService.flags.set("CF", "1");
-    } else {
-      this._storageService.flags.set("CF", "0");
-    }
+    // Won't work here
+    // if (result > 65535) {
+    //   this._storageService.flags.set("OF", "1");
+    // } else {
+    //   this._storageService.flags.set("OF", "0");
+    // }
+    //
+    // if (result > 65535) {
+    //   this._storageService.flags.set("CF", "1");
+    // } else {
+    //   this._storageService.flags.set("CF", "0");
+    // }
 
     const resultBin = BaseConverter.decToBin(result.toString()).substring(2);
     if (resultBin.split("1").length % 2 === 0 && result != 0) {
