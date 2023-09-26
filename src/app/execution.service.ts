@@ -381,6 +381,7 @@ export class ExecutionService {
     console.log("ST mem");
     const _memaddr = this._srcVal;
     this._storageService.ram.set(BaseConverter.anyToHex(_memaddr), this._storageService.registers.get("EAX") || BaseConverter.anyToHex("0"));
+    this._storageService.setRamNewValue(BaseConverter.anyToHex(_memaddr), this._storageService.registers.get("EAX") || BaseConverter.anyToHex("0"));
   }
 
   ldr(): void { // Load value from mem addr (src reg) into eax
@@ -394,7 +395,8 @@ export class ExecutionService {
     console.log("STR");
     const _memaddr = this._srcVal;
     const _stval = this._storageService.registers.get("EAX") || "0";
-    this._storageService.ram.set(_memaddr, BaseConverter.anyToHex(_stval));
+    // this._storageService.ram.set(_memaddr, BaseConverter.anyToHex(_stval));
+    this._storageService.setRamNewValue(_memaddr, BaseConverter.anyToHex(_stval));
   }
 
   mov(): void {

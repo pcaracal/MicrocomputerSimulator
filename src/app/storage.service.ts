@@ -51,6 +51,14 @@ export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
   PC$: Observable<string> = this._PCSubject.asObservable();
   IR$: Observable<string> = this._IRSubject.asObservable();
 
+  private _ramSubject: BehaviorSubject<Map<string, string>> = new BehaviorSubject<Map<string, string>>(this.ram);
+  ram$: Observable<Map<string, string>> = this._ramSubject.asObservable();
+
+  setRamNewValue(key: string, newValue: string): void {
+    this.ram.set(key, newValue);
+    this._ramSubject.next(this.ram);
+  }
+
   updateCpuState(newState: string): void {
     this.cpuState = newState;
     this._cpuStateSubject.next(this.cpuState);
@@ -87,6 +95,8 @@ export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
     for (let i = 0; i < this.RAM_SIZE; i++) {
       this.ram.set(BaseConverter.decToHex(i.toString()), BaseConverter.anyToHex("0"));
     }
+    this.setRamNewValue("0xFFF0", "0x0000");
+    this.setRamNewValue("0xFFF1", "0x0000");
     this.initRegisters();
     this.initFlags();
   }

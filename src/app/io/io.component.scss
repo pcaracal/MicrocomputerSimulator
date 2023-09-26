@@ -1,0 +1,71 @@
+.io-container {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  border-radius: 5px;
+  border: 1px solid #43454A;
+  margin-top: 2rem;
+}
+
+.title-bar {
+  background-color: #43454A;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.io-buttons {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  justify-items: center;
+
+  button {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .monospace {
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+}
+
+.button-active {
+  background-color: #F2C94C;
+  border-color: #F2C94C;
+  color: #fff;
+}
+
+.hex-bin {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.led-buttons {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  justify-items: center;
+
+  button {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+  }
+
+  .monospace {
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+}
+
+.led-active {
+  background-color: #F2C94C;
+  border-color: #F2C94C;
+  color: #fff;
+}
+
+.led-inactive {
+  background-color: #43454A;
+  color: #fff;
+}

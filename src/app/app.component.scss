@@ -23,3 +23,9 @@ h1 {
   flex-direction: row;
   align-items: baseline;
 }
+
+.cpu-io{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

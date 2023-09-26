@@ -1,1 +1,27 @@
-<p>io works!</p>
+<div class="io-container">
+  <strong class="title-bar">IO - 0xFFF0</strong>
+  <div class="hex-bin">
+    <p class="monospace">{{buttonIo}}</p>
+    <p class="monospace">{{BaseConverter.signedHexToDec(buttonIo || "0")}}</p>
+  </div>
+  <div class="io-buttons">
+    <div class="button-num-container" *ngFor="let btn of buttonArr; let i = index">
+      <button (click)="onButtonClick(i)" [class.button-active]="btn"></button>
+      <div class="monospace">{{Math.abs(15 - i)}}</div>
+    </div>
+  </div>
+</div>
+
+<div class="io-container">
+  <strong class="title-bar">IO - 0xFFF1</strong>
+  <div class="hex-bin">
+    <p class="monospace">{{ledIo}}</p>
+    <p class="monospace">{{BaseConverter.signedHexToDec(ledIo || "0")}}</p>
+  </div>
+  <div class="led-buttons">
+    <div class="button-num-container" *ngFor="let led of ledArr; let l = index">
+      <button disabled [class.led-active]="led" [class.led-inactive]="!led"></button>
+      <div class="monospace">{{Math.abs(15 - l)}}</div>
+    </div>
+  </div>
+</div>
