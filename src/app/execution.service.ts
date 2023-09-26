@@ -246,9 +246,11 @@ export class ExecutionService {
     let src = parseInt(BaseConverter.anyToDec(this._srcVal));
 
     let result = src === 0 ? 0 : (eax / src);
+    let modr = src === 0 ? 0 : (eax % src);
     this.setCFOF(result);
     this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
     this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
+    this._storageService.registers.set("EDX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(modr.toString())));
   }
 
   mod(): void {
@@ -258,7 +260,7 @@ export class ExecutionService {
     let result = src === 0 ? 0 : (eax % src);
     this.setCFOF(result);
     this.setFlags(parseInt(BaseConverter.signedBinToDec(BaseConverter.signedDecToBin(result.toString()))));
-    this._storageService.registers.set("EAX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
+    this._storageService.registers.set("EDX", BaseConverter.anyToHex(BaseConverter.signedDecToBin(result.toString())));
   }
 
   cmp(): void {
