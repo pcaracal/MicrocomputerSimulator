@@ -38,7 +38,7 @@ export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
   IR: string = BaseConverter.anyToHex("0"); // Instruction register - contains the current instruction being executed
 
   // Clock
-  ClockHz: number = 0; // Clock speed in Hz (obviously)
+  ClockHz: number = 10; // Clock speed in Hz (obviously)
 
   cpuState: string = "CPU Reset"; // "CPU Reset", "Instruction loaded into IR", Instruction executed", "Halted"
 

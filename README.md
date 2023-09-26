@@ -22,6 +22,9 @@ a simplified model. The flags are set by all ALU (Arithmetic Logic Unit) operati
 First you have to either load a program into the instruction input list (unimplemented) or write it manually.
 The list shows the memory addresses where the machine code of the instructions will be stored. The first
 instruction will be stored at address 0x0000, the second at 0x0001 etc.<br>
+After, you have to compile the program. This will convert the mnemonics into machine code and store it in the
+memory. Then you can run the program. The program will run until it reaches the HLT instruction or the end of
+the memory. You can also step through the program by clicking the step button.<br>
 The program counter (PC) is a register that holds the address of the next instruction to be executed.
 The instruction register (IR) is a register that holds the machine code of the instruction that is currently
 being executed.<br>

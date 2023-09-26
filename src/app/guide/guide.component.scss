@@ -67,8 +67,8 @@ a {
 
   tr {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr;
-    min-height: 50px;
+    grid-template-columns: 1fr 2.1fr 1fr 1fr;
+    min-height: 70px;
 
     &:nth-child(even) {
       background-color: #454954;
