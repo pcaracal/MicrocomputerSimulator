@@ -35,6 +35,13 @@ export class IoComponent {
     this._storageService.setRamNewValue("0xFFF0", hexString);
   }
 
+  onEightSegmentClick(index: number) {
+    this.eightSegmentArr[index] = !this.eightSegmentArr[index];
+    let binaryString = "0b" + this.eightSegmentArr.map((value) => value ? "1" : "0").reverse().join("");
+    let hexString = BaseConverter.anyToHex(binaryString);
+    this._storageService.setRamNewValue("0xFFF2", hexString);
+  }
+
   protected readonly BaseConverter = BaseConverter;
   protected readonly Math = Math;
 }

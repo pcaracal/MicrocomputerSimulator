@@ -34,31 +34,41 @@
   </div>
   <div class="eight-segment-container">
     <div class="eight-segment">
-      <div data-tooltip="Segment 0" class="segment-top segment hover-element"
+      <div data-tooltip="Segment 0" (click)="onEightSegmentClick(0)" class="segment-top segment hover-element"
            [class.segment-active]="eightSegmentArr[0]"></div>
-      <div data-tooltip="Segment 1" class="segment-top-right segment" [class.segment-active]="eightSegmentArr[1]"></div>
-      <div data-tooltip="Segment 2" class="segment-bottom-right segment"
+      <div data-tooltip="Segment 1" (click)="onEightSegmentClick(1)" class="segment-top-right segment"
+           [class.segment-active]="eightSegmentArr[1]"></div>
+      <div data-tooltip="Segment 2" (click)="onEightSegmentClick(2)" class="segment-bottom-right segment"
            [class.segment-active]="eightSegmentArr[2]"></div>
-      <div data-tooltip="Segment 3" class="segment-bottom segment" [class.segment-active]="eightSegmentArr[3]"></div>
-      <div data-tooltip="Segment 4" class="segment-bottom-left segment"
+      <div data-tooltip="Segment 3" (click)="onEightSegmentClick(3)" class="segment-bottom segment"
+           [class.segment-active]="eightSegmentArr[3]"></div>
+      <div data-tooltip="Segment 4" (click)="onEightSegmentClick(4)" class="segment-bottom-left segment"
            [class.segment-active]="eightSegmentArr[4]"></div>
-      <div data-tooltip="Segment 5" class="segment-top-left segment" [class.segment-active]="eightSegmentArr[5]"></div>
-      <div data-tooltip="Segment 6" class="segment-middle segment" [class.segment-active]="eightSegmentArr[6]"></div>
-      <div data-tooltip="Segment 7" class="segment-dot segment" [class.segment-active]="eightSegmentArr[7]"></div>
+      <div data-tooltip="Segment 5" (click)="onEightSegmentClick(5)" class="segment-top-left segment"
+           [class.segment-active]="eightSegmentArr[5]"></div>
+      <div data-tooltip="Segment 6" (click)="onEightSegmentClick(6)" class="segment-middle segment"
+           [class.segment-active]="eightSegmentArr[6]"></div>
+      <div data-tooltip="Segment 7" (click)="onEightSegmentClick(7)" class="segment-dot segment"
+           [class.segment-active]="eightSegmentArr[7]"></div>
     </div>
 
     <div class="eight-segment">
-      <div data-tooltip="Segment 8" class="segment-top segment" [class.segment-active]="eightSegmentArr[8]"></div>
-      <div data-tooltip="Segment 9" class="segment-top-right segment" [class.segment-active]="eightSegmentArr[9]"></div>
-      <div data-tooltip="Segment 10" class="segment-bottom-right segment"
+      <div data-tooltip="Segment 8" (click)="onEightSegmentClick(8)" class="segment-top segment"
+           [class.segment-active]="eightSegmentArr[8]"></div>
+      <div data-tooltip="Segment 9" (click)="onEightSegmentClick(9)" class="segment-top-right segment"
+           [class.segment-active]="eightSegmentArr[9]"></div>
+      <div data-tooltip="Segment 10" (click)="onEightSegmentClick(10)" class="segment-bottom-right segment"
            [class.segment-active]="eightSegmentArr[10]"></div>
-      <div data-tooltip="Segment 11" class="segment-bottom segment" [class.segment-active]="eightSegmentArr[11]"></div>
-      <div data-tooltip="Segment 12" class="segment-bottom-left segment"
+      <div data-tooltip="Segment 11" (click)="onEightSegmentClick(11)" class="segment-bottom segment"
+           [class.segment-active]="eightSegmentArr[11]"></div>
+      <div data-tooltip="Segment 12" (click)="onEightSegmentClick(12)" class="segment-bottom-left segment"
            [class.segment-active]="eightSegmentArr[12]"></div>
-      <div data-tooltip="Segment 13" class="segment-top-left segment"
+      <div data-tooltip="Segment 13" (click)="onEightSegmentClick(13)" class="segment-top-left segment"
            [class.segment-active]="eightSegmentArr[13]"></div>
-      <div data-tooltip="Segment 14" class="segment-middle segment" [class.segment-active]="eightSegmentArr[14]"></div>
-      <div data-tooltip="Segment 15" class="segment-dot segment" [class.segment-active]="eightSegmentArr[15]"></div>
+      <div data-tooltip="Segment 14" (click)="onEightSegmentClick(14)" class="segment-middle segment"
+           [class.segment-active]="eightSegmentArr[14]"></div>
+      <div data-tooltip="Segment 15" (click)="onEightSegmentClick(15)" class="segment-dot segment"
+           [class.segment-active]="eightSegmentArr[15]"></div>
     </div>
   </div>
 </div>
