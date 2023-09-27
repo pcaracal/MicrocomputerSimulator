@@ -14,12 +14,17 @@ export class IoComponent {
   ledIo?: string;
   ledArr: Array<boolean> = new Array<boolean>(16).fill(false);
 
+  eightSegmentIo?: string;
+  eightSegmentArr: Array<boolean> = new Array<boolean>(16).fill(false);
+
   constructor(private _storageService: StorageService) {
     this._storageService.ram$.subscribe(newRam => {
       this.buttonIo = newRam.get("0xFFF0");
       if (this.buttonIo) this.buttonArr = BaseConverter.anyToBin(this.buttonIo).substring(2).split("").map((value) => value === "1");
       this.ledIo = newRam.get("0xFFF1");
       if (this.ledIo) this.ledArr = BaseConverter.anyToBin(this.ledIo).substring(2).split("").map((value) => value === "1");
+      this.eightSegmentIo = newRam.get("0xFFF2");
+      if (this.eightSegmentIo) this.eightSegmentArr = BaseConverter.anyToBin(this.eightSegmentIo).substring(2).split("").map((value) => value === "1").reverse();
     });
   }
 
