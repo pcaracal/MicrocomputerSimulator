@@ -97,6 +97,7 @@ export class StorageService { // Handles storage of ROM, RAM, Registers, etc.
     }
     this.setRamNewValue("0xFFF0", "0x0000");
     this.setRamNewValue("0xFFF1", "0x0000");
+    this.setRamNewValue("0xFFF2", "0x0000");
     this.initRegisters();
     this.initFlags();
   }
