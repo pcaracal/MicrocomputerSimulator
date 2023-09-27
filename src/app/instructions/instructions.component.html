@@ -2,8 +2,16 @@
   <table>
     <thead>
     <tr>
-      <td>
+      <td class="baseline-text">
         <strong>Instructions</strong>
+        <button (click)="isDownloadInputShown = !isDownloadInputShown">Download</button>
+        <button (click)="handleClickUpload($event)">Upload</button>
+      </td>
+    </tr>
+    <tr *ngIf="isDownloadInputShown">
+      <td class="baseline-text">
+        <input type="text" [(ngModel)]="filename" placeholder="File name"/>
+        <button (click)="handleClickDownload($event)">✓</button>
       </td>
     </tr>
     </thead>
